@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PCAO-F V2 &amp; CCAO-F Certification Studio | 203-Scenario Enterprise Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="questions.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <!-- Canvas for milestone & correct-answer celebration effects -->
+  <canvas id="celebration-canvas"></canvas>
+
+  <!-- Floating Capsule Top Navigation Dock -->
+  <header class="top-nav">
+    <nav class="nav-capsule" aria-label="Main Navigation">
+      <a class="nav-brand" href="index.html">
+        <span class="brand-badge">203Q</span>
+        <span>PCAO-F &amp; CCAO-F Studio</span>
+      </a>
+
+      <div class="nav-links">
+        <a class="nav-link active" href="index.html">Home</a>
+        <a class="nav-link" href="quiz.html">203-MCQ Exam Workbench</a>
+        <a class="nav-link" href="#domains">Domains</a>
+        <a class="nav-link" href="#curriculum">Curriculum</a>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Light / Dark Theme Switcher with Sun & Moon Icons -->
+        <div class="theme-switch" role="group" aria-label="Theme Switcher">
+          <button type="button" class="theme-switch-btn active" data-theme-btn="light" title="Switch to Light Theme">
+            <span class="theme-icon" aria-hidden="true">☀️</span>
+            <span>Light</span>
+          </button>
+          <button type="button" class="theme-switch-btn" data-theme-btn="dark" title="Switch to Dark Theme">
+            <span class="theme-icon" aria-hidden="true">🌙</span>
+            <span>Dark</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-pill">
+        <span class="hero-pill-dot"></span>
+        <span>OFFICIAL CERTIFICATION BLUEPRINT • ALL 203 HIGH-FRICTION SCENARIOS LIVE</span>
+      </div>
+
+      <h1 class="hero-title" id="home-hero-title">
+        Enterprise AI Worker <br />
+        <span class="accent-span">Certification Mastery</span> Portal
+      </h1>
+
+      <p class="hero-sub">
+        An uncompromising, zero-guess assessment platform prepared for the <strong>Panaversity Certified Associate Foundations (PCAO-F V2, Part II)</strong> and Anthropic's <strong>Claude Certified Associate Foundations (CCAO-F)</strong>. Master cloud sandboxes, Firecracker microVMs, 4-part delegation briefs, the seven artifact types, the four operational cases, and monetization architectures.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="quiz.html">
+          <span>Start Full 203-Scenario Exam</span>
+          <span>→</span>
+        </a>
+        <a class="btn btn-outline" href="quiz.html?domain=The%20Four%20Operational%20Case%20Studies">
+          <span>🏢 Practice Operational Cases (64 Qs)</span>
+        </a>
+        <a class="btn btn-outline" href="quiz.html?domain=Claude%202.0%20Features%20%26%20Tooling">
+          <span>⚡ Claude 2.0 Native (107 Qs)</span>
+        </a>
+        <a class="btn btn-outline" href="quiz.html?domain=From%20Skills%20to%20Income">
+          <span>💰 Skills to Income (12 Qs)</span>
+        </a>
+      </div>
+
+      <!-- Live Examination Metrics Ribbon -->
+      <div class="metrics-panel">
+        <div class="metrics-ring-col">
+          <svg class="metrics-ring-svg" viewBox="0 0 58 58" aria-hidden="true">
+            <circle class="metrics-ring-bg" cx="29" cy="29" r="23"></circle>
+            <circle class="metrics-ring-fg" id="home-ring-fg" cx="29" cy="29" r="23" stroke-dasharray="144.5" stroke-dashoffset="144.5"></circle>
+          </svg>
+          <div>
+            <div class="metric-val" id="home-ring-pct">0%</div>
+            <div class="metric-label">Completion</div>
+          </div>
+        </div>
+
+        <div class="metric-cell">
+          <div class="metric-val" id="home-stat-total">203</div>
+          <div class="metric-label">Total Exam Items</div>
+        </div>
+
+        <div class="metric-cell">
+          <div class="metric-val" id="home-stat-live" style="color:var(--accent-primary);">203</div>
+          <div class="metric-label">Scenarios Live</div>
+        </div>
+
+        <div class="metric-cell">
+          <div class="metric-val" id="home-stat-confirmed" style="color:var(--status-success-text);">0/203</div>
+          <div class="metric-label">Confirmed</div>
+        </div>
+
+        <div class="metric-cell">
+          <div class="metric-val" id="home-stat-accuracy" style="color:var(--status-warn-text);">0%</div>
+          <div class="metric-label">Live Accuracy</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Scenario Check (Teaser) -->
+    <section class="teaser-section">
+      <article class="teaser-card" id="teaser-card">
+        <span class="section-tag">Interactive Diagnostic Scenario</span>
+        <h2 style="font-size:1.35rem; font-weight:700;">Live Concept Check: Ephemeral Sandbox Lifecycle</h2>
+        <p class="teaser-question-stem">
+          An analyst runs an automated ledger audit in a cloud Claude session. Once the run terminates, she attempts to access the temporary staging directory via terminal to inspect calculation bash logs, but finds the environment missing. What fundamental architectural constraint caused this disappearance?
+        </p>
+
+        <div class="teaser-options">
+          <button type="button" class="teaser-opt-btn" data-teaser-opt="A">
+            <span class="teaser-opt-key">A</span>
+            <span>Cloud work sessions execute inside isolated, temporary microVM sandboxes that are wiped clean upon session termination.</span>
+          </button>
+          <button type="button" class="teaser-opt-btn" data-teaser-opt="B">
+            <span class="teaser-opt-key">B</span>
+            <span>Enterprise security firewalls automatically quarantine directories whenever terminal bash calls are executed.</span>
+          </button>
+          <button type="button" class="teaser-opt-btn" data-teaser-opt="C">
+            <span class="teaser-opt-key">C</span>
+            <span>Host platforms automatically transfer uncommitted temporary scripts to permanent vector embeddings.</span>
+          </button>
+          <button type="button" class="teaser-opt-btn" data-teaser-opt="D">
+            <span class="teaser-opt-key">D</span>
+            <span>Desktop client daemons terminate filesystem bridges whenever ninety seconds of network inactivity occurs.</span>
+          </button>
+        </div>
+
+        <div class="teaser-feedback-box" id="teaser-feedback"></div>
+      </article>
+    </section>
+
+    <!-- Domain Mastery Cards Section -->
+    <section id="domains" style="padding-top:16px;">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Exam Blueprint Domains</span>
+          <h2 class="section-title">The Five Assessment Domains</h2>
+        </div>
+        <p class="section-desc">
+          Practice individual exam domains with dedicated sub-banks, verified pass thresholds, and auditable source references.
+        </p>
+      </div>
+
+      <div class="domain-grid" id="home-domain-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- Curriculum Sub-Section Directory (13 Sections) -->
+    <section id="curriculum" style="padding-top:16px;">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Curriculum Sub-Section Directory</span>
+          <h2 class="section-title">Targeted Module Practice (13 Sections)</h2>
+        </div>
+        <p class="section-desc">
+          Select any of the 13 curriculum modules below to launch targeted drills on specific case studies or architectural features.
+        </p>
+      </div>
+
+      <div class="section-directory-grid" id="home-section-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- Methodology & Zero-Guess Standards Bento -->
+    <section style="margin-bottom:64px;">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Psychometric Engineering</span>
+          <h2 class="section-title">The "Zero-Guess" Assessment Standard</h2>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px;">
+        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:24px; box-shadow:var(--shadow-sm);">
+          <div style="font-size:1.4rem; margin-bottom:10px;">⚖️</div>
+          <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px;">Strict Length Parity</h3>
+          <p style="font-size:0.9rem; color:var(--ink-secondary); line-height:1.6;">
+            All options A, B, C, and D are calibrated within ±10% to ±15% character counts. Eliminates heuristic tells where the correct option is noticeably longer or more detailed.
+          </p>
+        </div>
+
+        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:24px; box-shadow:var(--shadow-sm);">
+          <div style="font-size:1.4rem; margin-bottom:10px;">🎯</div>
+          <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px;">Zero Throwaways</h3>
+          <p style="font-size:0.9rem; color:var(--ink-secondary); line-height:1.6;">
+            No silly or easily eliminable distractors. Every incorrect alternative represents an authentic enterprise technical misapplication, conceptual inversion, or adjacent policy confusion.
+          </p>
+        </div>
+
+        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:24px; box-shadow:var(--shadow-sm);">
+          <div style="font-size:1.4rem; margin-bottom:10px;">🔬</div>
+          <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px;">Surgical Dissections</h3>
+          <p style="font-size:0.9rem; color:var(--ink-secondary); line-height:1.6;">
+            Every question features a comprehensive breakdown detailing precisely why the correct option succeeds and explicitly dismantling each of the three distractors.
+          </p>
+        </div>
+
+        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:24px; box-shadow:var(--shadow-sm);">
+          <div style="font-size:1.4rem; margin-bottom:10px;">✍️</div>
+          <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px;">The Second Signature</h3>
+          <p style="font-size:0.9rem; color:var(--ink-secondary); line-height:1.6;">
+            Emphasizes non-negotiable human quality gates before deliverable dispatches, communication custody, and professional liability retention in Forward Deployed Engineering.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Clean Footer -->
+  <footer style="border-top:1px solid var(--border-subtle); padding:40px 0; background:var(--bg-card); margin-top:40px;">
+    <div class="container" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:20px;">
+      <div>
+        <div style="font-weight:700; font-size:1.05rem; margin-bottom:4px;">PCAO-F V2 &amp; CCAO-F Certification Studio</div>
+        <div style="font-size:0.86rem; color:var(--ink-muted);">Panaversity Certified Associate Foundations • Anthropic Claude Associate Foundations</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <a class="btn btn-outline btn-sm" href="quiz.html">Start Exam →</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
