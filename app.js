@@ -559,6 +559,17 @@
 
     const pool = getActiveQuestionPool();
 
+    const matrixTitle = document.getElementById("matrix-header-title");
+    if (matrixTitle) {
+      if (state.filterType === "section") {
+        matrixTitle.textContent = `Topic Matrix: ${state.activeFilterValue} (${pool.length} Qs)`;
+      } else if (state.filterType === "domain") {
+        matrixTitle.textContent = `Domain Matrix: ${state.activeFilterValue} (${pool.length} Qs)`;
+      } else {
+        matrixTitle.textContent = `Scenario Navigation Matrix (Random Order - ${pool.length} Qs)`;
+      }
+    }
+
     matrixHost.innerHTML = pool
       .map((item) => {
         let cls = "matrix-btn";
@@ -616,21 +627,73 @@
       state.currentId = Number(qParam);
     }
 
+    const CANONICAL_SECTIONS = [
+      "Claude and ChatGPT 2.0",
+      "The New Way of Working",
+      "Tour of the Apps",
+      "Behind the Screens",
+      "The Architecture",
+      "Build Something",
+      "Case 1: Nisha's AI Team",
+      "Case 2: Nisha's First Client",
+      "Case 3: Nisha's Firm",
+      "Case 4: Nisha's Month-End",
+      "The Five Horizons",
+      "Preface: The Text Box That Became a Worker",
+      "From Skills to Income"
+    ];
+
+    // Populate and wire direct Topic / Module Dropdown Filter
+    const topicSelect = document.getElementById("topic-select-filter");
+    if (topicSelect && window.PCAOF_DATA) {
+      const sectionCounts = {};
+      getQuestions().forEach((q) => {
+        sectionCounts[q.section] = (sectionCounts[q.section] || 0) + 1;
+      });
+
+      let optionsHtml = '<option value="ALL">📚 Filter by Topic: All Topics (Random)</option>';
+      CANONICAL_SECTIONS.forEach((sec, idx) => {
+        const count = sectionCounts[sec] || 0;
+        optionsHtml += `<option value="${esc(sec)}">MOD ${String(idx + 1).padStart(2, "0")}: ${esc(sec)} (${count} Qs)</option>`;
+      });
+      topicSelect.innerHTML = optionsHtml;
+
+      if (state.filterType === "section") {
+        topicSelect.value = state.activeFilterValue;
+      } else {
+        topicSelect.value = "ALL";
+      }
+
+      topicSelect.addEventListener("change", () => {
+        const selectedVal = topicSelect.value;
+        if (selectedVal === "ALL") {
+          state.filterType = "all";
+          state.activeFilterValue = "ALL";
+          toast("Showing all 203 scenarios in randomized order");
+        } else {
+          state.filterType = "section";
+          state.activeFilterValue = selectedVal;
+          toast(`Filtered to topic: ${selectedVal}`);
+        }
+
+        const pool = getActiveQuestionPool();
+        if (pool.length > 0) {
+          state.currentId = pool[0].id;
+        }
+
+        saveState();
+        initQuizFiltersUI();
+        renderArena();
+      });
+    }
+
     // Build filter chips
     const filterContainer = document.getElementById("filter-chips-container");
     if (filterContainer && window.PCAOF_DATA) {
       const chips = [
-        { type: "all", val: "ALL", label: `All ${getQuestions().length} Qs` },
+        { type: "all", val: "ALL", label: `🎲 All MCQs (Random)` },
         ...window.PCAOF_DATA.CATEGORIES.map((c) => ({ type: "domain", val: c.id, label: c.short }))
       ];
-
-      if (state.filterType === "section" && state.activeFilterValue !== "ALL") {
-        chips.push({
-          type: "section",
-          val: state.activeFilterValue,
-          label: `Topic: ${state.activeFilterValue}`
-        });
-      }
 
       filterContainer.innerHTML = chips
         .map(
@@ -646,6 +709,10 @@
           state.filterType = btn.getAttribute("data-filter-type");
           state.activeFilterValue = btn.getAttribute("data-filter-val");
 
+          if (topicSelect) {
+            topicSelect.value = state.filterType === "section" ? state.activeFilterValue : "ALL";
+          }
+
           const pool = getActiveQuestionPool();
           if (pool.length > 0 && !pool.some((q) => q.id === state.currentId)) {
             state.currentId = pool[0].id;
@@ -659,12 +726,16 @@
     }
 
     function initQuizFiltersUI() {
-      if (!filterContainer) return;
-      filterContainer.querySelectorAll("[data-filter-val]").forEach((btn) => {
-        const t = btn.getAttribute("data-filter-type");
-        const v = btn.getAttribute("data-filter-val");
-        btn.classList.toggle("active", state.filterType === t && state.activeFilterValue === v);
-      });
+      if (filterContainer) {
+        filterContainer.querySelectorAll("[data-filter-val]").forEach((btn) => {
+          const t = btn.getAttribute("data-filter-type");
+          const v = btn.getAttribute("data-filter-val");
+          btn.classList.toggle("active", state.filterType === t && state.activeFilterValue === v);
+        });
+      }
+      if (topicSelect) {
+        topicSelect.value = state.filterType === "section" ? state.activeFilterValue : "ALL";
+      }
     }
 
     // Status filter buttons (All | Flagged | Wrong)
@@ -831,28 +902,6 @@
     }
 
     syncTimer();
-
-    // Shuffle Questions Order
-    const shuffleBtn = document.getElementById("shuffle-order-btn");
-    if (shuffleBtn && window.PCAOF_DATA) {
-      shuffleBtn.addEventListener("click", () => {
-        const arr = window.PCAOF_DATA.QUESTIONS;
-        for (let i = arr.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-        for (let i = 0; i < arr.length; i++) {
-          arr[i].id = i + 1;
-        }
-        const pool = getActiveQuestionPool();
-        if (pool.length > 0) {
-          state.currentId = pool[0].id;
-        }
-        saveState();
-        renderArena();
-        toast("🔀 Questions re-shuffled into fresh random order!");
-      });
-    }
 
     // Reset Progress Modal
     const resetModal = document.getElementById("reset-modal");

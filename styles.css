@@ -884,6 +884,31 @@ img, svg {
   border-color: var(--ink-primary);
 }
 
+.topic-select-wrap {
+  display: inline-flex;
+  align-items: center;
+}
+
+.topic-select-input {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--ink-primary);
+  outline: none;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  font-family: inherit;
+}
+
+.topic-select-input:hover,
+.topic-select-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
 /* 230-Item Jump Navigator Matrix */
 .matrix-container {
   background: var(--bg-card);

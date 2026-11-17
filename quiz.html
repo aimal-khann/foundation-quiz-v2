@@ -68,19 +68,26 @@
             </div>
           </div>
 
-          <button type="button" class="btn btn-outline btn-sm" id="shuffle-order-btn" title="Reshuffle question sequence">
-            🔀 Shuffle Order
-          </button>
           <button type="button" class="btn btn-outline btn-sm" id="open-reset-btn" title="Reset all progress">
             Reset Exam
           </button>
         </div>
       </div>
 
-      <!-- Domain Chips + Status View Filters -->
-      <div class="command-ribbon-row" style="padding-top:10px; border-top:1px solid var(--border-subtle);">
-        <div class="filter-chips-bar" id="filter-chips-container">
-          <!-- Rendered dynamically by app.js -->
+      <!-- Domain & Topic Filters + Status View Filters -->
+      <div class="command-ribbon-row" style="padding-top:10px; border-top:1px solid var(--border-subtle); gap:12px;">
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px;">
+          <div class="filter-chips-bar" id="filter-chips-container">
+            <!-- Rendered dynamically by app.js: 🎲 All MCQs (Random) + 5 Domain chips -->
+          </div>
+
+          <!-- Direct Topic / Module Dropdown Filter -->
+          <div class="topic-select-wrap">
+            <select id="topic-select-filter" class="topic-select-input" aria-label="Filter by Topic / Module">
+              <option value="ALL">📚 Filter by Topic: All Topics (Random)</option>
+              <!-- Populated dynamically by app.js for all 13 modules -->
+            </select>
+          </div>
         </div>
 
         <div style="display:flex; align-items:center; gap:6px;">
@@ -94,7 +101,7 @@
     <!-- 203-Item Jump Navigator Matrix -->
     <section class="matrix-container">
       <div class="matrix-header">
-        <span style="font-size:0.84rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-secondary);">
+        <span style="font-size:0.84rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-secondary);" id="matrix-header-title">
           Scenario Navigation Matrix (1–203)
         </span>
         <div class="matrix-legend">
