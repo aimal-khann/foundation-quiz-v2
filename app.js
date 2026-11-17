@@ -933,6 +933,21 @@
       });
     }
 
+    // Matrix Grid Hide / Show Toggle
+    const matrixToggleBtn = document.getElementById("matrix-toggle-btn");
+    const matrixGrid = document.getElementById("matrix-grid");
+    const matrixToggleText = document.getElementById("matrix-toggle-text");
+
+    if (matrixToggleBtn && matrixGrid) {
+      matrixToggleBtn.addEventListener("click", () => {
+        const isHidden = matrixGrid.style.display === "none";
+        matrixGrid.style.display = isHidden ? "grid" : "none";
+        if (matrixToggleText) {
+          matrixToggleText.textContent = isHidden ? "Hide Matrix" : "Show Matrix";
+        }
+      });
+    }
+
     renderArena();
   }
 

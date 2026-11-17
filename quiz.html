@@ -75,35 +75,41 @@
       </div>
 
       <!-- Domain & Topic Filters + Status View Filters -->
-      <div class="command-ribbon-row" style="padding-top:10px; border-top:1px solid var(--border-subtle); gap:12px;">
-        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px;">
-          <div class="filter-chips-bar" id="filter-chips-container">
-            <!-- Rendered dynamically by app.js: 🎲 All MCQs (Random) + 5 Domain chips -->
-          </div>
+      <div class="filter-section-wrapper" style="padding-top:10px; border-top:1px solid var(--border-subtle); display:flex; flex-direction:column; gap:8px;">
+        <!-- Row 1: Horizontal Scrollable Domain Chips -->
+        <div class="filter-chips-bar" id="filter-chips-container">
+          <!-- Rendered dynamically by app.js: 🎲 All MCQs (Random) + 5 Domain chips -->
+        </div>
 
-          <!-- Direct Topic / Module Dropdown Filter -->
+        <!-- Row 2: Topic Selector + Status View Filters -->
+        <div class="filter-controls-row">
           <div class="topic-select-wrap">
             <select id="topic-select-filter" class="topic-select-input" aria-label="Filter by Topic / Module">
               <option value="ALL">📚 Filter by Topic: All Topics (Random)</option>
               <!-- Populated dynamically by app.js for all 13 modules -->
             </select>
           </div>
-        </div>
 
-        <div style="display:flex; align-items:center; gap:6px;">
-          <button type="button" class="filter-chip active" data-status-filter="all">All Items</button>
-          <button type="button" class="filter-chip" data-status-filter="flagged">★ Flagged</button>
-          <button type="button" class="filter-chip" data-status-filter="wrong">✕ Incorrect</button>
+          <div class="status-filters-group">
+            <button type="button" class="filter-chip active" data-status-filter="all">All</button>
+            <button type="button" class="filter-chip" data-status-filter="flagged">★ Flagged</button>
+            <button type="button" class="filter-chip" data-status-filter="wrong">✕ Wrong</button>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- 203-Item Jump Navigator Matrix -->
-    <section class="matrix-container">
+    <section class="matrix-container" id="matrix-section">
       <div class="matrix-header">
-        <span style="font-size:0.84rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-secondary);" id="matrix-header-title">
-          Scenario Navigation Matrix (1–203)
-        </span>
+        <div class="matrix-header-title-wrap">
+          <span style="font-size:0.84rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-secondary);" id="matrix-header-title">
+            Scenario Navigation Matrix (1–203)
+          </span>
+          <button type="button" class="matrix-toggle-btn" id="matrix-toggle-btn" title="Toggle Matrix Grid">
+            <span id="matrix-toggle-text">Hide Matrix</span>
+          </button>
+        </div>
         <div class="matrix-legend">
           <div class="matrix-legend-item">
             <span class="legend-swatch" style="background:var(--bg-subtle); border:1px solid var(--border-subtle);"></span>
